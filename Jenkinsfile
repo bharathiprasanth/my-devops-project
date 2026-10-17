@@ -5,6 +5,8 @@ pipeline {
        stage('Build') {
            steps {
                 echo 'Hello Bharathi! Build stage started.'
+                echo "Build Number: ${env.BUILD_NUMBER}"
+                echo "Workspace: ${env.WORKSPACE}"
                 sh 'pwd'
                 sh 'whoami'
                 sh 'ls -l'
