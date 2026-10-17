@@ -13,5 +13,12 @@ pipeline {
                 echo 'Test stage completed successfully.'
             }
         }
+
+        stage('Post') {
+            steps {
+                echo 'Pipeline completed successfully!'
+                echo 'Ready for the next DevOps step.'
+            }
+        }
     }
 }
