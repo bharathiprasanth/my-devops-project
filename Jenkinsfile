@@ -2,11 +2,15 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            steps {
+       stage('Build') {
+           steps {
                 echo 'Hello Bharathi! Build stage started.'
-            }
-        }
+                sh 'pwd'
+                sh 'whoami'
+                sh 'ls -l'
+                sh 'date'
+              }
+          }          
 
         stage('Test') {
             steps {
