@@ -1,6 +1,14 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(
+            name: 'TARGET_ENV',
+            choices: ['DEV', 'QA'],
+            description: 'Select the environment for this practice build'
+        )
+    }
+
     stages {
        stage('Build') {
            steps {
@@ -12,12 +20,17 @@ pipeline {
                 sh 'ls -l'
                 sh 'date'
               }
-          }          
+          }
 
         stage('Test') {
-            steps {
-                echo 'Test stage completed successfully.'
-            }
+            when {
+               expression {
+                    params.TARGET_ENV == 'QA'
+               }
+           }
+           steps {
+              echo 'Test stage completed successfully.'
+           }
         }
 
         stage('Post') {
