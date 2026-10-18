@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Build started successfully.'
+                sh 'ls -l README.md'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running automated tests...'
+                sh 'bash test.sh'
+            }
+        }
+
+        stage('Post') {
+            steps {
+                echo 'Automated testing stage completed.'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'SUCCESS: All pipeline stages passed.'
+        }
+
+        failure {
+            echo 'FAILURE: Please check the test output.'
+        }
+
+        always {
+            echo 'INFO: Pipeline execution finished.'
+        }
+    }
+}
