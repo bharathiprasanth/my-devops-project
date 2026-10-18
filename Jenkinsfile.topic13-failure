@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Build started successfully.'
+            }
+        }
+
+        stage('Test Failure') {
+            steps {
+                echo 'Running failure test...'
+                sh 'bash failure-test.sh'
+            }
+        }
+
+        stage('Next Stage') {
+            steps {
+                echo 'This stage should not run after failure.'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'SUCCESS: Pipeline completed.'
+        }
+
+        failure {
+            echo 'FAILURE: Pipeline failed as expected.'
+        }
+
+        always {
+            echo 'INFO: Pipeline execution finished.'
+        }
+    }
+}
