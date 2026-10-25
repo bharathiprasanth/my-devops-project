@@ -1,0 +1,10 @@
+FROM docker.io/library/alpine:latest
+
+WORKDIR /app
+
+COPY README.md /app/README.md
+COPY test.sh /app/test.sh
+
+RUN chmod +x /app/test.sh
+
+CMD ["/bin/sh", "/app/test.sh"]

@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Source code checked out by Jenkins SCM.'
+                sh 'pwd'
+                sh 'ls -l'
+            }
+        }
+
+        stage('Automated Test') {
+            steps {
+                sh 'bash test.sh'
+            }
+        }
+
+        stage('Build Container Image') {
+            steps {
+                sh 'podman build -t bharathi-ci-test:${BUILD_NUMBER} -f Containerfile.ci .'
+            }
+        }
+
+        stage('Run Container Test') {
+            steps {
+                sh 'podman run --rm bharathi-ci-test:${BUILD_NUMBER}'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'SUCCESS: Container CI pipeline completed!'
+        }
+        failure {
+            echo 'FAILURE: Check Console Output.'
+        }
+        always {
+            echo 'Pipeline execution finished.'
+        }
+    }
+}
